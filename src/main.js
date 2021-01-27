@@ -1,17 +1,12 @@
 const core = require("@actions/core");
+const github = require('@actions/github');
 
 async function run() {
   try {
-    const ms = core.getInput('milliseconds');
-    core.debug(`Waiting ${ms} milliseconds ...`); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+    const owner = github.context.repo.owner;
+    const repo = github.context.repo.repo;
+    const APIURL = 'https://api.github.com/repos/octokit/plugin-rest-endpoint-methods.js/contents/docs/';
 
-    core.debug(new Date().toTimeString());
-    await new Promise(resolve => {
-      setTimeout(() => resolve('done!'), 10);
-    });
-    core.debug(new Date().toTimeString());
-
-    core.setOutput('time', new Date().toTimeString());
   } catch (error) {
     core.setFailed(error.message);
   }
